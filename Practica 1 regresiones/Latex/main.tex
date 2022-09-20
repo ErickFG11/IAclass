@@ -3,6 +3,7 @@
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage[spanish]{babel}
+\usepackage{listings}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
@@ -26,9 +27,7 @@ e.francogaona@ugto.mx}
 \maketitle
 
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
+Las regresiones se utilizan a menudo para predecir situaciones de la vida real en la industria y la ciencia. Existen diversas técnicas para realizar regresiones como pueden ser regresiones lineales multiples o bosques aleatorios. En este trabajo se presenta un caso de estudio de esas dos técnicas sobre un conjunto de datos público para revisar la diferencia de efectividad entre ambos métodos. Mientras que la regresión lineal multiple obtuvo un 82\% de efectividad, los bosques aleatorios obtuvieron un 88\% a costa de un mayor tiempo de ejecución.  
 \end{abstract}
 
 \section{Introducción}
@@ -53,7 +52,7 @@ La Figura 1 muestra cómo se relaciona el salario con los años de experiencia, 
 
 \section{Teoría}
 \subsection{Regresión lineal simple}
-El análisis de regresión lineal simple se utiliza para predecir el valor de una variable en función del valor de otra variable. La regresión lineal se ajusta a una línea recta o a una superficie que minimiza las diferencias entre los valores de salida y los reales. Una forma razonable de relación entre la respuesta Y y el regresor x es la relación lineal
+El análisis de regresión lineal simple se utiliza para predecir el valor de una variable en función del valor de otra variable. La regresión lineal se ajusta a una línea recta o a una superficie que minimiza las diferencias entre los valores de salida y los reales \cite{b1}. Una forma razonable de relación entre la respuesta Y y el regresor x es la relación lineal
 
 \begin{equation}
 Y= \beta_0 + \beta_1x
@@ -74,7 +73,7 @@ b_0= \frac{\sum_{i=1}^{n} y_i - b_1 \sum_{i=1}^{n}x_i}{n}
 \end{equation}
 
 \subsection{Regresión lineal multiple}
-En muchas aplicaciones habrá más de un regresor, es decir, más de una variable independiente que ayude a explicar a Y. Por ejemplo, si se tratara de un problema con dos regresores la estructura múltiple de la regresión se podría escribir como
+En muchas aplicaciones habrá más de un regresor, es decir, más de una variable independiente que ayude a explicar a Y \cite{b2}. Por ejemplo, si se tratara de un problema con dos regresores la estructura múltiple de la regresión se podría escribir como
 
 \begin{equation}
 Y= \beta_0 + \beta_1x_1 + \beta_2x_2
@@ -127,7 +126,7 @@ Para encontrar las $\beta$ se tiene de forma matricial que
 \end{equation}
 
 \subsection{Árboles de decisión}
-Un árbol de decisión es un método de aprendizaje supervisado que predice valores de respuesta aprendiendo reglas de decisión derivadas de características. Se pueden utilizar tanto en contextos de regresión como de clasificación. A diferencia de los modelos lineales, los árboles de decisión pueden capturar interacciones no lineales entre características y objetivos.Los árboles de decisión funcionan dividiendo el espacio de características en múltiples regiones rectangulares simples, divididas por ejes de división paralelos. Para obtener una predicción para una observación en particular, se utiliza la media de las observaciones de entrenamiento en la partición a la que pertenece la nueva observación.
+Un árbol de decisión es un método de aprendizaje supervisado que predice valores de respuesta aprendiendo reglas de decisión derivadas de características \cite{b3}. Se pueden utilizar tanto en contextos de regresión como de clasificación. A diferencia de los modelos lineales, los árboles de decisión pueden capturar interacciones no lineales entre características y objetivos.Los árboles de decisión funcionan dividiendo el espacio de características en múltiples regiones rectangulares simples, divididas por ejes de división paralelos. Para obtener una predicción para una observación en particular, se utiliza la media de las observaciones de entrenamiento en la partición a la que pertenece la nueva observación.
 
 De forma matemática la función para un árbol de regresión se expresa de la siguiente manera: 
 
@@ -140,7 +139,7 @@ donde $w_m$ es la respuesta media en una región particular $(R_m)$, $v_m$ repre
 De forma visual un árbol de decisión con dos variables de características ($X_1$ y $X_2$) y una respuesta numérica “y” se puede observar en la Figura 2. Por otro lado, en la Figura 3 se muestra un subconjunto que contiene el espacio de caracteristicas. El dominio se divide mediante divisiones paralelas de eje, es decir, cada división del dominio se alinea con uno de los ejes de características.
 
 \subsection{Bosques aleatorios de decisión}
-El principal problema con los árboles de decisión es que tienden a sobreajustarse. Puedes crear un árbol que realice regresiones perfectamente con los datos de entrenamiento, pero no en el conjunto de datos de prueba. Para ese problema se crearon los bosques aleatorios de desición. La aplicación repetida del algoritmo de generación de árboles de decisión a los mismos datos con diferentes parámetros produce lo que se denomina un bosque de decisión aleatorio. Este algoritmo es uno de los métodos de pronóstico más eficientes y ampliamente utilizados para big data en la actualidad, promediando múltiples modelos sin ruido ni sesgo para reducir la variación final general. 
+El principal problema con los árboles de decisión es que tienden a sobreajustarse. Puedes crear un árbol que realice regresiones perfectamente con los datos de entrenamiento, pero no en el conjunto de datos de prueba. Para ese problema se crearon los bosques aleatorios de desición. La aplicación repetida del algoritmo de generación de árboles de decisión a los mismos datos con diferentes parámetros produce lo que se denomina un bosque de decisión aleatorio \cite{b4}. Este algoritmo es uno de los métodos de pronóstico más eficientes y ampliamente utilizados para big data en la actualidad, promediando múltiples modelos sin ruido ni sesgo para reducir la variación final general. 
 
 En la práctica, se construyen diferentes conjuntos de entrenamiento y prueba sobre los mismos datos, la unión de estos árboles de diferentes complejidades y con datos de origen distinto aunque del mismo conjunto resulta un bosque aleatorio. Su principal característica es que produce modelos más robustos que los que se obtienen generando un único árbol de decisión complejo para los mismos datos. El ensamblaje de diferentes modelos (árboles de decisión) produce predicciones más sólidas. Los grupos de árboles de clasificación se combinan y se infiere una predicción a partir de la población de árboles. Mientras haya suficientes árboles en el bosque, hay poco o ningún riesgo de sobreadaptación. Los árboles de decisión también se pueden sobreajustar. Los bosques aleatorios obtienen esto construyendo árboles de diferentes tamaños a partir de subconjuntos y combinando los resultados.
 
@@ -159,55 +158,101 @@ En la práctica, se construyen diferentes conjuntos de entrenamiento y prueba so
 \end{figure}
 
 \section{Resultados}
-Before you begin to format your paper, first write and save the content as a 
-separate text file. Complete all content and organizational editing before 
-formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
-proofreading, spelling and grammar.
+Para realizar la práctica se programó en lenguaje Python (revisar Anexo A) los dos sistemas de regresión. Primero se obtuvo el conjunto de datos publico mpg-auto el cual contiene información de distintos autos que se relacionan con el rendimiento de gasolina como se muestra en la Tabla 1. Para ambos casos se tuvo que hacer un pre-procesamiento de los datos debido a que el archivo disponible no cuenta con información completa para todos los registros. Es importante mencionar que el conjunto de datos contiene registros sobre el modelo y al ser una variable categorica puede ser convertida a variable dummy. Las variables se normalizaron para quedar en el mismo rango. los datos se dividieron para entrenamiento y pruebas en una proporcion 80/20 respectivamente.
 
-Keep your text and graphic files separate until after the text has been 
-formatted and styled. Do not number text heads---{\LaTeX} will do that 
-for you.
+Mediante la técnica de eliminación hacia atras se optimizó la regresión lineal multiple, colocando todas las variables x se fueron eliminando las variables que su valor P superaba el umbral del 5\% para el sistema.  En este conjunto de datos en particular solo se eliminó una variable la aceleración que si bien superaba el 5\% de umbral, no lo superó por mucho pues obtuvo 6\% y se pudo dejar en el modelo.  
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{| c | c |}
+\hline
+\multicolumn{2}{ |c| }{MPG-auto dataset} \\ \hline
+Dato & Tipo de dato \\ \hline
+Millas por galón & continuo \\ \hline
+Cilindros & discreto multivalor \\ \hline
+Desplazamiento & continuo \\ \hline
+Caballos de fuerza & continua  \\ \hline
+Peso & continuo  \\ \hline
+Aceleración & continua   \\ \hline
+Año del modelo &  discreto multivaluado  \\ \hline
+Origen &  discreto multivaluado \\ \hline
+Nombre del coche & cadena  \\ \hline
+\end{tabular}
+\caption{conjunto de datos MPG-auto }
+\end{center}
+\end{table}
+
+Para los bosques aleatorios el proceso es similar, se ejecuta con el pre-procesamiento antes mencionado. Los resultados obtenidos se midieron mediante las metricas $R^2$ y $R^2$ ajustada como se observa en la Tabla 2.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{| c | c |}
+\hline
+Regresión lineal multiple & Bosques aleatorios \\ \hline
+$R^2$ = 82.54\% & $R^2$ = 82.27\% \\ \hline
+$R^2$ = 82.54\% & $R^2$ = 88.22\% \\ \hline
+\end{tabular}
+\caption{Resultados del entrenamiento}
+\end{center}
+\end{table}
 
 \section*{Conclusiones}
+Como se pudo observar en los resultados, los bosques aleatorios son más robustos que la regresión lineal multiple aunque requiere más tiempo de procesamiento. Sin embargo, actualmente el poder de computo es cada vez mayor por lo que el tiempo se reduce con el paso de los años mediante el hardware. Durante el entrenamiento no se tomó en cuenta la variable categorica del modelo del auto ya que al intentar convertirla en variable dummy, eran demasiadas variables que no podian ser procesadas. Para trabajo futuro se puede modificar manualmente el conjunto de datos para asegurarse en reducir esa variable y colocar solo la marca del vehiculo. No se realizó en este trabajo ya que el rendimiento obtenido es considerablemente optimo por lo que podría no valer la pena incluir esas variables dummies. 
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
-
-\section*{Referencias}
-
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
+Las regresiones no son 100\% efectivas ya que no siempre se va a ajustar perfectamente a los valores a predecir pero si se puede hacer una aproximación cercana mediante la optimización de parametros de los métodos. Ademas, es bueno revisar de ser posible los datos que se proporcionan para el entrenamiento y eliminar los valores atipicos para evitar errores. El sobreajuste es un problema que trata de evitar los bosques aleatorios y que generalmente cumple su función, pero dependiendo de la aplicación puede optarse por una técnica u otra. A pesar de no ser confiables en su totalidad. las predicciones que es capaz de realizar alguno de estos métodos son lo suficientemente robustos para utilizarse en la industria ajustando el modelo lomejor posible para mejores resultados. 
 
 
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
+\bibitem{b1}Yang, Q. (2017). Regression. In: Schintler, L., McNeely, C. (eds) Encyclopedia of Big Data. Springer, Cham. https://doi.org/10.1007/978-3-319-32001-4-174-1.
+\bibitem{b2} Probabilidad y estadística aplicadas a la ingeniería, Douglas C. Montgomery y George C. Runger. Limusa Wiley, 2002. Segunda edición.
+\bibitem{b3} Rokach, L., Maimon, O. (2005). Decision Trees. In: Maimon, O., Rokach, L. (eds) Data Mining and Knowledge Discovery Handbook. Springer, Boston, MA. https://doi.org/10.1007/0-387-25465-X-9.
+\bibitem{b4} Cutler, A., Cutler, D.R., Stevens, J.R. (2012). Random Forests. In: Zhang, C., Ma, Y. (eds) Ensemble Machine Learning. Springer, Boston, MA. https://doi.org/10.1007/978-1-4419-9326-7-5.
 
+\end{thebibliography}
+
+\section{Anexo A}
+Lectura de conjunto de datos y separandolos en variables dependientes e independientes y eliminación de valores incompletos.  
+\lstset{language=Python, breaklines=true, basicstyle=\footnotesize}
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=-2pt}
+\begin{lstlisting}[frame=single]
+    cols=["MPG", "cylinders", "displacement", "horsepower", "weight", "acceleration", "model year", "origin"]
+    dataset=pd.read_csv("auto-mpg.data", na_values="?", comment='\t', sep=' ', skipinitialspace=True, names=cols)
+    X=dataset.iloc[:,1:].values
+    Y=dataset.iloc[:,0].values
+\end{lstlisting}
+
+Normalizado de datos. 
+\begin{lstlisting}[frame=single]
+    sc=StandardScaler()
+    X=sc.fit_transform(X)
+\end{lstlisting}
+
+Separando el conjunto de datos.
+\begin{lstlisting}[frame=single]
+    X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
+\end{lstlisting}
+
+\subsection{Regresión lineal multiple}
+
+Ejecución de la regresión lineal multiple y calculo de las metricas de evaluación. 
+\begin{lstlisting}[frame=single]
+    regresion=LinearRegression()
+    regresion.fit(X_train, Y_train)
+    ypred=regresion.predict(X_test)
+
+    print("R^2 : ", r2_score(Y_test, ypred))
+    print("R^2 ajustada: ", 1 - (1-r2_score(Y_test, ypred))*(len(Y)-1)/(len(Y)-X.shape[1]-1))
+\end{lstlisting}
+
+\subsection{Bosques aleatorios}
+Ejecución del bosque aleatorio estableciendo 10 árboles y calculo de las metricas de evaluación. 
+\begin{lstlisting}[frame=single]
+    regresion=RandomForestRegressor(n_estimators=10 ,random_state=0) 
+    regresion.fit(X_train, Y_train)
+    ypred=regresion.predict(X_test)
+    
+    print("R^2 : ", r2_score(Y_test, ypred))
+    print("R^2 ajustada: ", 1 - (1-r2_score(Y_test, ypred))*(len(Y)-1)/(len(Y)-X.shape[1]-1))
+
+\end{lstlisting}
 \end{document}

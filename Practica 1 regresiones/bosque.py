@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
@@ -35,13 +34,3 @@ if __name__ == '__main__':
     print('------------------------------------')
     print("R^2 : ", r2_score(Y_test, ypred))
     print("R^2 ajustada: ", 1 - (1-r2_score(Y_test, ypred))*(len(Y)-1)/(len(Y)-X.shape[1]-1))
-    '''
-    X_grid=np.arange(min(X), max(X), 0.01)
-    X_grid=X_grid.reshape((len(X_grid),1))
-    plt.scatter(X,Y,color='red')
-    plt.plot(X_grid, regresion.predict(X_grid), color='blue')
-    plt.title('Regresion con bosques aleatorios')
-    plt.xlabel('Posicion')
-    plt.ylabel('Salario')
-    plt.show()
-    '''

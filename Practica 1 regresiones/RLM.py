@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score
 import statsmodels.api as sm
 
@@ -50,7 +50,11 @@ if __name__ == '__main__':
     imputer=SimpleImputer(missing_values=np.nan, strategy='mean', fill_value=None, verbose=0, copy=True, add_indicator=False)
     imputer.fit(X[:, :])
     X[:, :]=imputer.transform(X[:, :])
+    #normalizar
+    sc=StandardScaler()
+    X=sc.fit_transform(X)
 
+    #optimizar
     optimizar_BW(X,Y)
     X=X[:,[0,1,2,3,5,6]]
     print('------------------------------------')
