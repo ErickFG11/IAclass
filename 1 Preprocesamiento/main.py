@@ -27,11 +27,11 @@ if __name__ == '__main__':
     X[:,0]=labelencoder_X.fit_transform(X[:,0])
     Y=labelencoder_Y.fit_transform(Y)
     print('------------------------------------')
-    print('Caracteristicas dummy \n',X)
-    #Traducir categoricos a numeros
+    print('Caracteristicas numericas \n',X)
+    #Traducir categoricos a dummy
     ct=ColumnTransformer([("Country", OneHotEncoder(), [0])], remainder="passthrough")
     X=ct.fit_transform(X)
-    print('Categoricos a numeros \n',X)
+    print('Variables dummy \n',X)
     #separar conjunto de datos
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
     #escalar datos
