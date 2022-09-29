@@ -10,11 +10,11 @@ from matplotlib.colors import ListedColormap
 
 if __name__ == '__main__':
     #importar dataset
-    dataset=pd.read_csv("Data.csv")
+    dataset=pd.read_csv("Social_Network_Ads.csv")
     print('Dataset Original \n',dataset)
     print('------------------------------------')
     #conjunto de caracteristicas
-    X=dataset.iloc[:,1:3].values
+    X=dataset.iloc[:,2:4].values
     print('Caracteristicas \n',X)
     print('------------------------------------')
     #vector de clases
@@ -40,6 +40,7 @@ if __name__ == '__main__':
     #entrenar naive bayes
     classifier=GaussianNB()
     classifier.fit(X_train, Y_train)
+
     #Graficar
     X_set, Y_set=X_train, Y_train
     X1, X2=np.meshgrid(np.arange(start=X_set[:,0].min()-1, stop=X_set[:,0].max()+1, step=0.01),

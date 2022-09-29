@@ -12,7 +12,6 @@ if __name__ == '__main__':
     Y=dataset.iloc[:,-1].values #Salario
     #separar conjunto de datos
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
-    #escalar datos
     regresion=LinearRegression()
     regresion.fit(X_train, Y_train)
     ypred=regresion.predict(X_test)
