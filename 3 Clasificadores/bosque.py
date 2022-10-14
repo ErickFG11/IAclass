@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
@@ -37,8 +37,8 @@ if __name__ == '__main__':
     print('------------------------------------')
     #separar conjunto de datos
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
-    #entrenar arbol
-    classifier=DecisionTreeClassifier(criterion='entropy', random_state=0)
+    #entrenar bosque
+    classifier=RandomForestRegressor(n_estimators=10, random_state=0)
     classifier.fit(X_train, Y_train)
 
     #Graficar
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     for i, j in enumerate(np.unique(Y_set)):
         plt.scatter(X_set[Y_set==j,0], X_set[Y_set==j,1],
                     color=ListedColormap(('red', 'green'))(i), label=j)
-    plt.title('Arboles de decision')
+    plt.title('Bosques aleatorios')
     plt.xlabel('Edad')
     plt.ylabel('Salario estimado')
     plt.legend()
