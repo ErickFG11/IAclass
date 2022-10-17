@@ -1,15 +1,7 @@
 import random
 
-if __name__ == '__main__':
-    S=[1,2,3,4,5,6,7,8] #conjunto de valores de x
-    FS=[90,60,50,80,100,40,20,70] #soluciones de F(x)
+def BLocal(s, fs, x, f):
     vecindad=[]
-    #valor aleatorio entre el primer y ultimo valor del arreglo S
-    inicio=random.randint(S[0], S[-1]) 
-    print("Inicio-> ", inicio)
-    x=inicio
-    #f es el indice aleatorio del arreglo FS
-    f=FS[S.index(x)] 
     i=0
     continuar=True #variable de control 
     
@@ -26,10 +18,43 @@ if __name__ == '__main__':
                 x=n
                 f=FS[S.index(n)]
                 continuar=True
-        
         vecindad=[]
         i=i+1
+    return i, x, f
     
+def BLocalExpAle(s, fs, x, f):
+    vecindad=[]
+    i=1
+    iteraciones=5 
+    
+    while i<iteraciones:
+        #crear la vecindad expandida, todos los valores menos el actual 
+        for n in s: 
+            if n!=x:
+                vecindad.append(n)
+                
+        x1=vecindad[random.randint(0, len(vecindad)-1)]
+        #comparar los vecinos con el valor aleatorio inicial
+        if FS[S.index(x1)]<f:
+            x=x1
+            f=FS[S.index(x1)]
+        vecindad=[]
+        i=i+1
+    return i, x, f
+
+if __name__ == '__main__':
+    S=[1,2,3,4,5,6,7,8] #conjunto de valores de x
+    FS=[90,60,50,80,100,40,20,70] #soluciones de F(x)
+    
+    #valor aleatorio entre el primer y ultimo valor del arreglo S
+    inicio=random.randint(S[0], S[-1]) 
+    print("Inicio-> ", inicio)
+    x=inicio
+    #f es el indice aleatorio del arreglo en FS
+    f=FS[S.index(x)] 
+    #funcion de busqueda local 
+    #i,x,f=BLocal(S, FS, x, f)
+    i,x,f=BLocalExpAle(S, FS, x, f)
     print("Iteraciones: ",i)
     print("x* =", x)
     print("f* =", f)
