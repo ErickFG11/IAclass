@@ -25,7 +25,7 @@ def BLocal(s, fs, x, f):
 def BLocalExpAle(s, fs, x, f):
     vecindad=[]
     i=1
-    iteraciones=5 
+    iteraciones=10
     
     while i<iteraciones:
         #crear la vecindad expandida, todos los valores menos el actual 
@@ -35,9 +35,10 @@ def BLocalExpAle(s, fs, x, f):
                 
         x1=vecindad[random.randint(0, len(vecindad)-1)]
         #comparar los vecinos con el valor aleatorio inicial
-        if FS[S.index(x1)]<f:
+        if fs[s.index(x1)]<f:
             x=x1
-            f=FS[S.index(x1)]
+            f=fs[s.index(x1)]
+        print(x, f)
         vecindad=[]
         i=i+1
     return i, x, f
