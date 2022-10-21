@@ -2,6 +2,7 @@ import numpy.random as nr
 import numpy as np
 import math
 from matplotlib import pyplot as plt
+#randn genera aleatorios con media 0 y varianza 1
 
 def graficos():
 	#define rango de entrada
@@ -33,13 +34,6 @@ def graficos():
 	plt.show()
 
 	#explore metropolis acceptance criterion for simulated annealing
-	iterations = 100
-	#temperatura inicial
-	initial_temp = 10
-	#arreglo de iteraciones de 0 a 1
-	iterations = [i for i in range(iterations)]
-	#temperaturas por iteracion
-	temperatures = [initial_temp/float(i + 1) for i in iterations]
 	#criterio de aceptacion metropolis
 	differences = [0.01, 0.1, 1.0]
 	for d in differences:
@@ -59,7 +53,7 @@ def objective(x):
 
 # simulated annealing algorithm
 def simulated_annealing(objective, limites, n_iterations, step_size, temp):
-	#generar un punto inicial
+	#generar un punto inicial, rand genera entre 0 y 1
 	mejor = limites[:, 0] + nr.rand(len(limites)) * (limites[:, 1] - limites[:, 0])
 	#evaluar el punto inicial
 	mejor_eval = objective(mejor)
@@ -81,8 +75,8 @@ def simulated_annealing(objective, limites, n_iterations, step_size, temp):
 			# reportar progreso
 			print('>%d f(%s) = %.5f' % (i, mejor, mejor_eval))
 
-		#si no es mejor el candidato se genera uno nuevo (vecino)
-		#calcular temoeratura para epoca actual
+		#si no es mejor el candidato se genera uno nuevo con probabilidad metropolis
+		#calcular temperatura para epoca actual
 		t = temp / float(i + 1)
 		diff = candidate_eval - curr_eval
 		#calcular criterio de aceptacion metropolis
@@ -96,7 +90,7 @@ def simulated_annealing(objective, limites, n_iterations, step_size, temp):
 if __name__ == '__main__':
     #definir rangeo de entrada
 	Limites = np.asarray([[-5.0, 5.0]])
-	#semilla para obtener los mismo numeros aleatorios
+	#semilla para obtener los mismos numeros aleatorios
 	nr.seed(1)
 	n_iterations = 1000
 	step_size = 0.1
