@@ -1,0 +1,7 @@
+seker=5
+barbunya=0
+bombay=1
+cali=2
+horoz=4
+sira=6
+dermason=3
