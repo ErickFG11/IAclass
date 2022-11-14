@@ -1,12 +1,15 @@
+from keras.layers import Dense, Dropout
+from keras.models import Sequential
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
+import keras.utils as ku
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, plot_confusion_matrix
 
 if __name__ == '__main__':
+    numeroclases=7
     #importar dataset
     dataset=pd.read_csv("Dry_Bean_Dataset.csv")
     print('Dataset Original \n',dataset)
@@ -23,6 +26,7 @@ if __name__ == '__main__':
     labelencoder_Y=LabelEncoder()
     Y=labelencoder_Y.fit_transform(Y)
     print('Clases codificadas\n', Y)
+    Y=ku.to_categorical(Y)
     print('------------------------------------')
 
     #escalar datos
@@ -32,15 +36,28 @@ if __name__ == '__main__':
     print('------------------------------------')
     #separar conjunto de datos
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
-    #entrenar KNN
-    classifier=KNeighborsClassifier(n_neighbors=5, metric='euclidean')
-    classifier.fit(X_train, Y_train)
+
+    #modelo de red
+    model=Sequential()
+    model.add(Dense(units=32, activation='relu'))
+    model.add(Dense(units=16, activation='relu'))
+    model.add(Dense(units=8, activation='relu'))
+    model.add(Dense(units=7, activation='softmax'))
+    #compilar modelo
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    #ejecutar red neuronal
+    model.fit(X_train, Y_train, epochs=100, batch_size=32)
 
     #Predict the response for test dataset
-    y_pred = classifier.predict(X_test)
+    y_pred = model.predict(X_test)
+    y_pred=(y_pred>0.5)
+    Y_test=(Y_test>0.5)
+
     accu=accuracy_score(Y_test, y_pred)
     print("Model Accuracy: {:.2f}%".format(accu * 100))
     #matriz de confusion
     cm=confusion_matrix(Y_test, y_pred)
-    plot_confusion_matrix(classifier, X_test, Y_test)
-    plt.show()
+    print(cm)
+    #plot_confusion_matrix(model, X_test, Y_test)
+    #plt.show()
+

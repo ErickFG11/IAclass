@@ -5,8 +5,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, confusion_matrix, plot_confusion_matrix
-import numpy as np
-import sys
 
 if __name__ == '__main__':
     #importar dataset
