@@ -6,8 +6,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import keras.utils as ku
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, confusion_matrix, plot_confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
+import keras_tuner as kt
+
+def modelo(hp):
+
 
 if __name__ == '__main__':
     names = ['BARBUNYA','BOMBAY','CALI','DERMASON','HOROZ','SEKER','SIRA']
@@ -50,7 +53,6 @@ if __name__ == '__main__':
     #ejecutar red neuronal
     model.fit(X_train, Y_train, epochs=100, batch_size=32)
 
-    #Prediccion
     #Prediccion
     y_pred = model.predict(X_test)
     predicciones=[]
