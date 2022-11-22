@@ -15,7 +15,7 @@
 \renewcommand{\spanishtablename}{Tabla}%renombrar tablas en español%
 \begin{document}
 
-\title{Practica 1 \\ Predicción de rendimiento de gasolina en millas por galón de un auto mediante técnicas de regresión}
+\title{Practica 2 \\ Clasificación de frijoles mediante tecnicas de machine learning}
 
 \author{\IEEEauthorblockN{1\textsuperscript{st} Erick Franco Gaona}
 \IEEEauthorblockA{\textit{Departamento de Estudios Multidisciplinarios} \\
@@ -32,46 +32,25 @@ Las regresiones se utilizan a menudo para predecir situaciones de la vida real e
 
 \section{Introducción}
 
-El análisis de regresión se usa ampliamente para hacer predicciones y estimaciones de expectativas condicionales de variables dependientes e independientes, y sus aplicaciones se superponen con el campo del aprendizaje automático. Ejecutar regresiones permite determinar los factores más importantes, los factores que a menudo se pasan por alto y cómo se influyen entre sí. Estos factores se denominan variables y se clasifican de la siguiente manera: \\
+La clasificación consta en ordenar u organizar las cosas en un conjunto de categorías o clases. Puedes categorizar ideas, objetos o cualquier tipo de referencia. El concepto de clasificación tiene diferentes vertientes: aprendizaje supervisado, no supervisado, semi supervisado y por refuerzo. El aprendizaje supervisado cuenta con un conocimiento a priori, es decir para la tarea de clasificar un objeto dentro de una categoría o clase se tienen modelos ya clasificados (objetos agrupados que tienen características comunes). En la primera fase se tiene un conjunto de entrenamiento o de aprendizaje (para el diseño del clasificador) y otro llamado de prueba o de validación (para clasificación), estos sirven para construir un modelo o regla general para la clasificación. En la segunda fase se clasifican los objetos o muestras de las que se desconoce la clase a las que pertenecen. 
+A diferencia del aprendizaje supervisado, el aprendizaje no supervisado o clustering no se cuenta con conocimiento a priori, por lo que se tiene un área de entrenamiento disponible para la tarea de clasificación. En este tipo de clasificación contamos con “objetos” o muestras que tiene un conjunto de características, de las que no sabemos a qué clase o categoría pertenece, entonces la finalidad es el descubrimiento de grupos de “objetos” cuyas características afines nos permitan separar las diferentes clases. \\
 
-\begin{itemize}
-\item Variable dependiente: Es el factor el cual se está tratando de entender o predecir (Y).
-\item Variable(s) independiente(s): Es el factor que se cree que puede impactar en la variable dependiente (X). \\
-\end{itemize}
+En ocasiones, es muy complicado disponer de un conjunto de datos completamente etiquetado. Este tipo de aprendizaje tiene un poco de los dos anteriores. Usando este enfoque, se comienza etiquetando manualmente algunos de los datos. Una vez se tenga una pequeña porción de datos etiquetados, se entrena uno o varios algoritmos de aprendizaje supervisado sobre esa pequeña parte de datos etiquetados y se usan los modelos resultantes del entrenamiento para etiquetar el resto de los comentarios. Finalmente, se entrena un algoritmo de aprendizaje supervisado utilizando como etiquetas las etiquetadas manualmente y las generadas por los modelos anteriores. 
+Por último, el aprendizaje por refuerzo es un método de aprendizaje automático que se basa en recompensar los comportamientos deseados y penalizar los no deseados. Es un aprendizaje que fija objetivos a largo plazo para obtener una recompensa general máxima y lograr una solución óptima. El juego es uno de los campos más utilizados para poner a prueba el aprendizaje por refuerzo. En estos casos, el agente recibe información sobre las reglas del juego y aprende a jugar por sí mismo. En un principio se comporta de manera aleatoria, pero con el tiempo empieza a aprender movimientos más sofisticados.  Este tipo de aprendizaje se aplica también en otras áreas como la robótica, la optimización de recursos o sistemas de control.\\
 
-Debido a eso la regresión suele usarse en las organizaciones ya que puede interpretar fenómenos y hacer predicciones sobre el futuro, así como obtener información empresarial valiosa y procesable. Este método proporciona información sobre cómo la estructura de costos y las características variables afectan el producto. Realizar análisis de regresión permite tomar decisiones comerciales más informadas y eficientes y desarrollar estrategias para mejorar la calidad de sus productos y servicios, lo que beneficia a su organización.
-
-La Figura 1 muestra cómo se relaciona el salario con los años de experiencia, prediciendo el salario de un trabajador dado. La regresión muestra una relación lineal positiva entre el salario (eje y) y los años de experiencia (eje x). Puede utilizar estos datos históricos para realizar previsiones salariales. En este trabajo se presentan dos metodos para realizar regresiones y se compara la efectividad de ambos aplicados para la predicción del rendimiento de la gasolina en millas por galón tomando un conjunto de datos público (mpg-auto) de diversos autos.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.6]{1.png}
-    \caption{Ejemplo de regresión aplicado en el salario vs los años de experiencia.}
-    \label{fig:mesh1}
-\end{figure}
+En este trabajo se cuenta con un dataset público que posee 16 características de 6 diferentes tipos de frijol, por lo que, se utiliza el aprendizaje supervisado. En las siguientes secciones se explica la teoria y ejemplifica mediante el caso de estudio su aplicación. 
 
 \section{Teoría}
-\subsection{Regresión lineal simple}
-El análisis de regresión lineal simple se utiliza para predecir el valor de una variable en función del valor de otra variable. La regresión lineal se ajusta a una línea recta o a una superficie que minimiza las diferencias entre los valores de salida y los reales \cite{b1}. Una forma razonable de relación entre la respuesta Y y el regresor x es la relación lineal
+\subsection{Clasificador bayesiano simple}
+El teorema de Bayes es utilizado para calcular la probabilidad de un suceso, teniendo información de antemano sobre ese suceso. Es posble calcular la probabilidad de un suceso A, sabiendo además que ese suceso cumple cierta característica que condiciona su probabilidad. El teorema de la probabilidad total hace inferencia sobre un suceso B, a partir de los resultados de los sucesos A. Por su parte, Bayes calcula la probabilidad de A condicionado a B. Para calcular la probabilidad tal como la definió Bayes en este tipo de sucesos, es necesaria la siguiente fórmula: 
 
 \begin{equation}
-Y= \beta_0 + \beta_1x
+P[A_n/B]= \frac{P[B/A_n]*P[A_n]}{\sum P[B/A_i]*P[A_i]}
 \end{equation}
 
-en la que, $\beta_0$ es la intersección de la recta y $\beta_1$ es la pendiente.\\
-
-Si la relación es exacta y no contiene componentes aleatorios o probabilísticos, se trata de una relación determinista entre dos variables. Sin embargo, en muchos casos reales, la relación no es determinista, es decir, una x dada no siempre produce el mismo valor de Y. Debido a esa situación, los problemas son de naturaleza probabilística, toda vez que la relación anterior no puede considerarse exacta. El concepto de análisis de regresión se refiere a encontrar la mejor relación entre Y y x cuantificando la fuerza de esa relación, y empleando métodos que permitan predecir los valores de la respuesta dados los valores del regresor x. En resumen la regresión lineal simple, trata el caso de una sola variable regresora, en el que la relación entre x y y es lineal.\\
-
-El método de los mínimos cuadrados se utiliza para calcular la recta de regresión lineal que minimiza los residuos, es decir, las diferencias entre los valores reales y los estimados por la recta. Con este método se debe calcular $b_0$ y $b_1$, los estimados de $\beta_0$ y $\beta_1$, de manera que la suma de los cuadrados de los residuales sea mínima. Los estimados $b_0$ y $b_1$ de los mínimos cuadrados de los coeficientes de regresión $\beta_0$ y $\beta_1$ se calculan mediante las fórmulas
-
-\begin{equation}
-b_1= \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^{n}(x_i-\bar{x})^{2}}
-\end{equation}
-
-\begin{equation}
-b_0= \frac{\sum_{i=1}^{n} y_i - b_1 \sum_{i=1}^{n}x_i}{n}
-\end{equation}
-
+donde B es el suceso sobre el que se tiene información previa y $A_n$ son los distintos sucesos condicionados. En la parte del numerador se encuentra la probabilidad condicionada, y el denominador la probabilidad total. \\
+\\
+Los clasificadores NaiveBayes (NBC por sus siglas en inglés) son algoritmos de aprendizaje automático simples pero potentes. Se basan en la probabilidad condicional y el teorema de Bayes. 
 \subsection{Regresión lineal multiple}
 En muchas aplicaciones habrá más de un regresor, es decir, más de una variable independiente que ayude a explicar a Y \cite{b2}. Por ejemplo, si se tratara de un problema con dos regresores la estructura múltiple de la regresión se podría escribir como
 
