@@ -1,11 +1,12 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage[spanish]{babel}
 \usepackage{listings}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithmic}
+\usepackage{algorithm}
+
+\usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
@@ -50,91 +51,91 @@ P[A_n/B]= \frac{P[B/A_n]*P[A_n]}{\sum P[B/A_i]*P[A_i]}
 
 donde B es el suceso sobre el que se tiene información previa y $A_n$ son los distintos sucesos condicionados. En la parte del numerador se encuentra la probabilidad condicionada, y el denominador la probabilidad total. \\
 \\
-Los clasificadores NaiveBayes (NBC por sus siglas en inglés) son algoritmos de aprendizaje automático simples pero potentes. Se basan en la probabilidad condicional y el teorema de Bayes. 
-\subsection{Regresión lineal multiple}
-En muchas aplicaciones habrá más de un regresor, es decir, más de una variable independiente que ayude a explicar a Y \cite{b2}. Por ejemplo, si se tratara de un problema con dos regresores la estructura múltiple de la regresión se podría escribir como
+Los clasificadores NaiveBayes (NBC por sus siglas en inglés) son algoritmos de aprendizaje automático simples pero potentes. Se basan en la probabilidad condicional y el teorema de Bayes. SE deben seguir los siguientes pasos para implemntar el algoritmo: 
+\begin{enumerate}
+\item Convertir el conjunto de datos en una tabla de frecuencias
+\item Crear una tabla de probabilidad calculando las correspondientes a que ocurran los diversos eventos o haciendo una distribución Gaussiana
+\item La ecuación NaiveBayesse se usa para calcular la probabilidad posterior de cada clase
+\item La clase con la probabilidad posterior más alta es el resultado de la predicción
+\end{enumerate}
+
+\subsection{Clasificación vecino más cercano (K-NN)}
+El clasificador de vecinos más cercanos se basa en calcular las distancias entre el datoa  clasificar y los ejemplos de entrenamiento para decidir a que clase pertenece dependiendo de la menor distancia. No define de forma explícita una frontera de separación entre clases. La frontera se define implícitamente a partir de la distancia a las muestras del conjunto de entrenamiento. No requiere una representación de cada imagen en forma de vector, únicamente la definición de una función de distancia entre dos imágenes. Se considera un método de lazy learning debido a que la generalización más allá de los datos de entrenamiento es demorada hasta que se hace una pregunta al sistema.\\
+
+De igual forma, K vecinos más cercanos es uno de los algoritmos de clasificación más básicos y esenciales en Machine Learning. Pertenece al dominio del aprendizaje supervisado y encuentra una aplicación intensa en el reconocimiento de patrones, la minería de datos y la detección de intrusos. Este algoritmo consiste en seleccionar un valor de K vecinos. Al momento del análisis los K datos más cercanos al valor que se desea predecir será la solución. Acá lo importante es seleccionar un valor de K acorde a los datos para tener una mayor precisión en la predicción. Si k es muy pequeño el modelo será muy sensitivo a puntos que son atípicos o con ruido. Si K es muy grande el modelo tiende a asignar siempre la clase más grande.
+
+\begin{algorithm}[H]
+\caption{Clasificador vecinos cercanos NN}
+\begin{algorithmic}
+\Require \\D \Comment{datos de entrenamiento}\\
+k \Comment{número de vecinos}\\
+t \Comment{dato para clasificar}
+\Ensure c \Comment{clase para clasificar t}
+\State $N \gets 0$
+\For{$d \in D$}
+\If{$|N| \leq k$}
+    \State $N=N \cup d_i$
+\Else
+    \If{$\exists \: u \in N$ tal que $sim(t,u) \geq sim(t,d)$}
+    	\State $N=N-u$
+    	\State $N=N\cup d_i$
+    \EndIf
+\EndIf
+\EndFor
+\State $c=$ clases para los mejores $u \in N$ que son clasificados 
+\end{algorithmic}
+\end{algorithm}
+
+Para el calculo de la distancia entre los vecinos se suelen utilizar la distancia euclidiana (ecuación 2) y distancia Manhattan (ecuación 3) siendo la primera la más común. La distancia euclidiana es un número positivo que indica la separación que tienen dos puntos en un espacio. La distancia entre dos puntos A y B de un espacio euclidiano es la longitud del vector AB perteneciente a la única recta que pasa por dichos puntos. Por otr lado, la distancia Manhattan dice que la distancia entre dos puntos es la suma de las diferencias absolutas de sus coordenadas. Es decir, es la suma de las longitudes de los dos catetos del triángulo rectangulo.
 
 \begin{equation}
-Y= \beta_0 + \beta_1x_1 + \beta_2x_2
-\end{equation}
-
-el modelo de regresión lineal múltiple general se expresa de la siguiente manera 
-
-
-\begin{equation}
-Y= \beta_0 + \beta_1x_1 + ... + \beta_kx_k
-\end{equation}
-
-donde cada coeficiente de regresión $\beta_i$ se estima por medio de $b_i$, a partir de los datos muestrales, usando el método de mínimos cuadrados. Si se acomoda en forma matricial se tiene que:
-
-\begin{equation}
-\begin{pmatrix}
-y_1 \\
-y_2 \\
-\vdots \\
-y_n 
-\end{pmatrix}
-=
-\begin{pmatrix}
-1 & x_{11} & \dotsi x_{k1}\\
-1 & x_{12} & \dotsi x_{k2}\\
-1 & n & \dotsi x_{kn}
-\end{pmatrix}
-\begin{pmatrix}
-\beta_0 \\
-\beta_1 \\
-\vdots \\
-\beta_k
-\end{pmatrix}
-+
-\begin{pmatrix}
-\epsilon_0 \\
-\epsilon_1 \\
-\vdots \\
-\epsilon_n
-\end{pmatrix}
+d_{ij}=\sqrt{\sum_{k=1}^{n}(x_{ki}-x_{kj})^2}
 \end{equation}
 
 \begin{equation}
-Y=X\beta+\epsilon
-\end{equation}
-
-Para encontrar las $\beta$ se tiene de forma matricial que
-\begin{equation}
-\beta=(X^TX)^{-1}X^TY
+d(p.q)=\sum_{i}^{n}|p_i-q_i|
 \end{equation}
 
 \subsection{Árboles de decisión}
-Un árbol de decisión es un método de aprendizaje supervisado que predice valores de respuesta aprendiendo reglas de decisión derivadas de características \cite{b3}. Se pueden utilizar tanto en contextos de regresión como de clasificación. A diferencia de los modelos lineales, los árboles de decisión pueden capturar interacciones no lineales entre características y objetivos.Los árboles de decisión funcionan dividiendo el espacio de características en múltiples regiones rectangulares simples, divididas por ejes de división paralelos. Para obtener una predicción para una observación en particular, se utiliza la media de las observaciones de entrenamiento en la partición a la que pertenece la nueva observación.
+La idea de la clasificación con árboles de decisión es simple: iterativamente se van generando particiones binarias (es decir de a dos agrupaciones) sobre la región de interés, buscando que cada nueva partición genere un subgrupo de datos lo más homogéneo posible. Primero se establece una condición. Dependiendo de si los datos cumplen o no la condición se tendrá una primera partición en dos subregiones. Y luego se repite el procedimiento anterior, una y otra vez, hasta que al final se obtengan agrupaciones lo más homogéneas posible, es decir con puntos que pertenezcan en lo posible a una sola categoría.\\
 
-De forma matemática la función para un árbol de regresión se expresa de la siguiente manera: 
-
+Para medir la homogeneidad se usa el índice Gini, que mide el grado de impureza de un nodo: índices Gini iguales a cero indican nodos puros (es decir con datos que pertenecen a una sola categoría), mientras que índices mayores que cero y con valores hasta de uno indican nodos con impurezas (es decir con datos de más de una categoría).
 \begin{equation}
-f(x)=\sum_{m=1}^{M} w_m\phi(x;v_m)
+Gini=1-(Probabilidad 1)^2-(Probabilidad 2)^2
 \end{equation}
 
-donde $w_m$ es la respuesta media en una región particular $(R_m)$, $v_m$ representa cómo se divide cada variable en un valor de umbral particular.
+Los pasos para realizar un árbol de desición para clasificar son los siguientes: 
+\begin{enumerate}
 
-De forma visual un árbol de decisión con dos variables de características ($X_1$ y $X_2$) y una respuesta numérica “y” se puede observar en la Figura 2. Por otro lado, en la Figura 3 se muestra un subconjunto que contiene el espacio de caracteristicas. El dominio se divide mediante divisiones paralelas de eje, es decir, cada división del dominio se alinea con uno de los ejes de características.
+\item Para crear la raíz del árbol, es decir la primera partición, se toman todas las características y, para cada una de ellas, se definen todos los posibles umbrales a que haya lugar. Cada umbral será simplemente el punto intermedio entre dos valores consecutivos de cada característica.
 
-\subsection{Bosques aleatorios de decisión}
-El principal problema con los árboles de decisión es que tienden a sobreajustarse. Puedes crear un árbol que realice regresiones perfectamente con los datos de entrenamiento, pero no en el conjunto de datos de prueba. Para ese problema se crearon los bosques aleatorios de desición. La aplicación repetida del algoritmo de generación de árboles de decisión a los mismos datos con diferentes parámetros produce lo que se denomina un bosque de decisión aleatorio \cite{b4}. Este algoritmo es uno de los métodos de pronóstico más eficientes y ampliamente utilizados para big data en la actualidad, promediando múltiples modelos sin ruido ni sesgo para reducir la variación final general. 
+\item Para cada uno de estos umbrales se calcula la partición (nodo izquierdo y nodo derecho) y para cada nodo hijo se calcula el índice Gini. Con estos nodos hijos se calcula la función de costo del nodo padre, que es el promedio ponderado de los índices Gini de sus hijos.
 
-En la práctica, se construyen diferentes conjuntos de entrenamiento y prueba sobre los mismos datos, la unión de estos árboles de diferentes complejidades y con datos de origen distinto aunque del mismo conjunto resulta un bosque aleatorio. Su principal característica es que produce modelos más robustos que los que se obtienen generando un único árbol de decisión complejo para los mismos datos. El ensamblaje de diferentes modelos (árboles de decisión) produce predicciones más sólidas. Los grupos de árboles de clasificación se combinan y se infiere una predicción a partir de la población de árboles. Mientras haya suficientes árboles en el bosque, hay poco o ningún riesgo de sobreadaptación. Los árboles de decisión también se pueden sobreajustar. Los bosques aleatorios obtienen esto construyendo árboles de diferentes tamaños a partir de subconjuntos y combinando los resultados.
+\item Se toma el umbral (o nodo padre resultante) que tenga la función de costo con el menor valor posible, indicando que la partición obtenida es la más homogénea de todas las analizadas.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{2.png}
-    \caption{Ejemplo visual de un árbol de decisión.}
-    \label{fig:mesh1}
-\end{figure}
+\item Una vez se haya realizado esta partición, se repite el mismo procedimiento de forma iterativa para los nodos resultantes, exceptuando los que sean nodos hoja
+\end{enumerate}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.6]{3.jpg}
-    \caption{Divisiones de los subconjuntos que realiza un árbol de decisión.}
-    \label{fig:mesh1}
-\end{figure}
+\subsection{Bosques aleatorios}
+El bosque aleatorio tiende a combinar cientos de árboles de decisión y luego entrena cada árbol de decisión en una muestra diferente de las observaciones. Las predicciones finales del bosque aleatorio se realizan promediando las predicciones de cada árbol individual. El algoritmo de bosque aleatorio también puede ayudarte a encontrar características que son importantes en tu conjunto de datos. Esto se debe al algoritmo de Boruta, que selecciona características importantes en un conjunto de datos. El algoritmo funciona completando los siguientes pasos:
+\begin{enumerate}
+\item El algoritmo selecciona muestras en forma aleatoria de la base de datos proporcionada.
+\item El algoritmo creará un árbol de decisión para cada muestra seleccionada. Luego obtendrá un resultado de predicción de cada árbol creado.
+\item A continuación, se realizará la votación para cada resultado previsto. Para un problema de clasificación, usará la moda, y para un problema de regresión, usará la media.
+\item El algoritmo seleccionará el resultado de predicción más votado como predicción final.
+\end{enumerate}
+
+\subsection{Máquina de vectores de soporte (SVM)}
+Las máquinas de vectores de soporte son una técnica que encuentra la mejor separación posible entre clases. Normalmente, los problemas de aprendizaje automático tienen muchísimas dimensiones. Así que, en vez de encontrar la línea óptima, el SVM encuentra el hiperplano que maximiza el margen de separación entre clases. Los vectores de soporte son los puntos que definen el margen máximo de separación del hiperplano que separa las clases. Se llaman vectores, en lugar de puntos, porque estos puntos tienen tantos elementos como dimensiones tenga nuestro espacio de entrada. Es decir, estos puntos multidimensionales se representan con vector de n dimensiones.\\
+
+Es bastante frecuente que los datos tengan ruido, que no estén etiquetados perfectamente, o que el problema sea tan difícil que, para unos pocos puntos, sea muy complicado clasificarlos correctamente. Para estos casos, podemos decirle al SVM, que preferimos que generalice bien para la mayoría de los casos, aunque algunos pocos casos del conjunto de entrenamiento no estén perfectamente clasificados. Lo que normalmente vamos buscando es la construcción de modelos de aprendizaje automático que generalicen bien. \\
+
+En algunas ocaciones no hay forma de encontrar un hiperplano que permita separar dos clases. En estos casos decimos que las clases no son linealmente separables. Para resolver este problema podemos usar el truco del kernel. El truco del kernel consiste en inventar una dimensión nueva en la que podamos encontrar un hiperplano para separar las clases. Al añadir una dimensión nueva, es posible separar las clases con una superficie de decisión. También hay métodos para separar los datos $(x_i. y_i)$ directamente aun no siendo separables linealmente, mediante funciones polinómicas y funciones de base radial (RBF).
+
+\subsection{Redes neuronales}
+Una red neuronal es un modelo simplificado que emula el modo en que el cerebro humano procesa la información: Funciona simultaneando un número elevado de unidades de procesamiento interconectadas que parecen versiones abstractas de neuronas. Las unidades de procesamiento se organizan en capas. Hay tres partes normalmente en una red neuronal : una capa de entrada, con unidades que representan los campos de entrada; una o varias capas ocultas; y una capa de salida, con una unidad o unidades que representa el campo o los campos de destino. Las unidades se conectan con fuerzas de conexión variables (o ponderaciones). Los datos de entrada se presentan en la primera capa, y los valores se propagan desde cada neurona hasta cada neurona de la capa siguiente. al final, se envía un resultado desde la capa de salida.\\
+
+La red aprende examinando los registros individuales, generando una predicción para cada registro y realizando ajustes a las ponderaciones cuando realiza una predicción incorrecta. Este proceso se repite muchas veces y la red sigue mejorando sus predicciones hasta haber alcanzado uno o varios criterios de parada. Al principio, todas las ponderaciones son aleatorias y las respuestas que resultan de la red son, posiblemente, disparatadas. La red aprende a través del entrenamiento. Continuamente se presentan a la red ejemplos para los que se conoce el resultado, y las respuestas que proporciona se comparan con los resultados conocidos. La información procedente de esta comparación se pasa hacia atrás a través de la red, cambiando las ponderaciones gradualmente. A medida que progresa el entrenamiento, la red se va haciendo cada vez más precisa en la replicación de resultados conocidos. Una vez entrenada, la red se puede aplicar a casos futuros en los que se desconoce el resultado.
 
 \section{Resultados}
 Para realizar la práctica se programó en lenguaje Python (revisar Anexo A) los dos sistemas de regresión. Primero se obtuvo el conjunto de datos publico mpg-auto el cual contiene información de distintos autos que se relacionan con el rendimiento de gasolina como se muestra en la Tabla 1. Para ambos casos se tuvo que hacer un pre-procesamiento de los datos debido a que el archivo disponible no cuenta con información completa para todos los registros. Es importante mencionar que el conjunto de datos contiene registros sobre el modelo y al ser una variable categorica puede ser convertida a variable dummy. Las variables se normalizaron para quedar en el mismo rango. los datos se dividieron para entrenamiento y pruebas en una proporcion 80/20 respectivamente.
