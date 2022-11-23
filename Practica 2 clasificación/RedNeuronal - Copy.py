@@ -29,8 +29,6 @@ def construir_modelo(hp):
 if __name__ == '__main__':
     names = ['BARBUNYA','BOMBAY','CALI','DERMASON','HOROZ','SEKER','SIRA']
     numeroclases=7
-    n_hidden=7
-    n_neurons=124
     #importar dataset
     dataset=pd.read_csv("Dry_Bean_Dataset.csv")
     print('Dataset Original \n',dataset)
@@ -58,13 +56,8 @@ if __name__ == '__main__':
     print('------------------------------------')
     #separar conjunto de datos
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
-    #modelo de red
-    model=Sequential()
-    model.add(Flatten())
-    for _ in range(n_hidden):
-        model.add(Dense(n_neurons, activation='relu'))
-    model.add(Dense(units=numeroclases, activation='softmax'))
-    #compilar modelo
+
+    #encontrar modelo
     random_search_tuner=kt.RandomSearch(construir_modelo, objective="val_accuracy", max_trials=20, seed=42,
                                     overwrite=True, project_name="frijoles")
     #ejecutar red neuronal

@@ -99,9 +99,13 @@ d(p.q)=\sum_{i}^{n}|p_i-q_i|
 \subsection{Árboles de decisión}
 La idea de la clasificación con árboles de decisión es simple: iterativamente se van generando particiones binarias (es decir de a dos agrupaciones) sobre la región de interés, buscando que cada nueva partición genere un subgrupo de datos lo más homogéneo posible. Primero se establece una condición. Dependiendo de si los datos cumplen o no la condición se tendrá una primera partición en dos subregiones. Y luego se repite el procedimiento anterior, una y otra vez, hasta que al final se obtengan agrupaciones lo más homogéneas posible, es decir con puntos que pertenezcan en lo posible a una sola categoría.\\
 
-Para medir la homogeneidad se usa el índice Gini, que mide el grado de impureza de un nodo: índices Gini iguales a cero indican nodos puros (es decir con datos que pertenecen a una sola categoría), mientras que índices mayores que cero y con valores hasta de uno indican nodos con impurezas (es decir con datos de más de una categoría).
+Para medir la homogeneidad se usa el índice Gini (ecuación 4), que mide el grado de impureza de un nodo: índices Gini iguales a cero indican nodos puros (es decir con datos que pertenecen a una sola categoría), mientras que índices mayores que cero y con valores hasta de uno indican nodos con impurezas (es decir con datos de más de una categoría). La entropía por su parte, es una medida que se aplica para cuantificar el desorden de un sistema (ecuación 5). Si un nodo es puro su entropía es 0 y solo tiene observaciones de una clase, pero si la entropía es igual a 1, existe la misma frecuencia para cada una de las clases de observaciones.
 \begin{equation}
-Gini=1-(Probabilidad 1)^2-(Probabilidad 2)^2
+Gini(t)=1- \sum_{i}^{n}p_i^2
+\end{equation}
+
+\begin{equation}
+H=- \sum_{i}^{n}p_i*\log_2p_i
 \end{equation}
 
 Los pasos para realizar un árbol de desición para clasificar son los siguientes: 
@@ -128,53 +132,123 @@ El bosque aleatorio tiende a combinar cientos de árboles de decisión y luego e
 \subsection{Máquina de vectores de soporte (SVM)}
 Las máquinas de vectores de soporte son una técnica que encuentra la mejor separación posible entre clases. Normalmente, los problemas de aprendizaje automático tienen muchísimas dimensiones. Así que, en vez de encontrar la línea óptima, el SVM encuentra el hiperplano que maximiza el margen de separación entre clases. Los vectores de soporte son los puntos que definen el margen máximo de separación del hiperplano que separa las clases. Se llaman vectores, en lugar de puntos, porque estos puntos tienen tantos elementos como dimensiones tenga nuestro espacio de entrada. Es decir, estos puntos multidimensionales se representan con vector de n dimensiones.\\
 
-Es bastante frecuente que los datos tengan ruido, que no estén etiquetados perfectamente, o que el problema sea tan difícil que, para unos pocos puntos, sea muy complicado clasificarlos correctamente. Para estos casos, podemos decirle al SVM, que preferimos que generalice bien para la mayoría de los casos, aunque algunos pocos casos del conjunto de entrenamiento no estén perfectamente clasificados. Lo que normalmente vamos buscando es la construcción de modelos de aprendizaje automático que generalicen bien. \\
+Es bastante frecuente que los datos tengan ruido, que no estén etiquetados perfectamente, o que el problema sea tan difícil que, para unos pocos puntos, sea muy complicado clasificarlos correctamente. Para estos casos, es posible indicarle al SVM, que generalice bien para la mayoría de los casos, aunque algunos pocos casos del conjunto de entrenamiento no estén perfectamente clasificados. Lo que normalmente se busca es la construcción de modelos de aprendizaje automático que generalicen bien. \\
 
-En algunas ocaciones no hay forma de encontrar un hiperplano que permita separar dos clases. En estos casos decimos que las clases no son linealmente separables. Para resolver este problema podemos usar el truco del kernel. El truco del kernel consiste en inventar una dimensión nueva en la que podamos encontrar un hiperplano para separar las clases. Al añadir una dimensión nueva, es posible separar las clases con una superficie de decisión. También hay métodos para separar los datos $(x_i. y_i)$ directamente aun no siendo separables linealmente, mediante funciones polinómicas y funciones de base radial (RBF).
+En algunas ocaciones no hay forma de encontrar un hiperplano que permita separar dos clases. En estos casos las clases no son linealmente separables. Para resolver este problema es posible usar el truco del kernel. El truco del kernel consiste en inventar una dimensión nueva en la que se encuentre un hiperplano para separar las clases. Al añadir una dimensión nueva, es posible separar las clases con una superficie de decisión. También hay métodos para separar los datos $(x_i. y_i)$ directamente aun no siendo separables linealmente, mediante funciones polinómicas y funciones de base radial (RBF).
 
 \subsection{Redes neuronales}
-Una red neuronal es un modelo simplificado que emula el modo en que el cerebro humano procesa la información: Funciona simultaneando un número elevado de unidades de procesamiento interconectadas que parecen versiones abstractas de neuronas. Las unidades de procesamiento se organizan en capas. Hay tres partes normalmente en una red neuronal : una capa de entrada, con unidades que representan los campos de entrada; una o varias capas ocultas; y una capa de salida, con una unidad o unidades que representa el campo o los campos de destino. Las unidades se conectan con fuerzas de conexión variables (o ponderaciones). Los datos de entrada se presentan en la primera capa, y los valores se propagan desde cada neurona hasta cada neurona de la capa siguiente. al final, se envía un resultado desde la capa de salida.\\
+Una red neuronal es un modelo simplificado que emula el modo en que el cerebro humano procesa la información. Funciona simulando un número elevado de unidades de procesamiento interconectadas como versiones abstractas de neuronas (Figura 1). Las unidades de procesamiento se organizan en capas. Hay tres partes normalmente en una red neuronal : una capa de entrada, con unidades que representan los campos de entrada; una o varias capas ocultas; y una capa de salida, con una unidad o unidades que representa el campo o los campos de destino, vease Figura 2. Los datos de entrada se presentan en la primera capa, y los valores se propagan desde cada neurona hasta cada neurona de la capa siguiente. al final, se envía un resultado desde la capa de salida.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{1.jpg}
+    \caption{Estructura de un neurona artificial.}
+    \label{fig:mesh1}
+\end{figure}
 
 La red aprende examinando los registros individuales, generando una predicción para cada registro y realizando ajustes a las ponderaciones cuando realiza una predicción incorrecta. Este proceso se repite muchas veces y la red sigue mejorando sus predicciones hasta haber alcanzado uno o varios criterios de parada. Al principio, todas las ponderaciones son aleatorias y las respuestas que resultan de la red son, posiblemente, disparatadas. La red aprende a través del entrenamiento. Continuamente se presentan a la red ejemplos para los que se conoce el resultado, y las respuestas que proporciona se comparan con los resultados conocidos. La información procedente de esta comparación se pasa hacia atrás a través de la red, cambiando las ponderaciones gradualmente. A medida que progresa el entrenamiento, la red se va haciendo cada vez más precisa en la replicación de resultados conocidos. Una vez entrenada, la red se puede aplicar a casos futuros en los que se desconoce el resultado.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{2.png}
+    \caption{Estructura de red neuronal.}
+    \label{fig:mesh1}
+\end{figure}
+
+Saber que arquitectura de red neuronal es la ideal para el caso de estudio es el verdadero reto. Actualmente se cuentan con métodos heuristicos de optimización que pueden ser aplicados en cualquiera de los algoritmos descritos anteriormente. En este caso, al ser dificil de probar multiples combinaciones de capas y neuronas, es mejor implementar una heuristica sencilla para encontrar las combinaciones adecuadas. Una de esas técnicas es conocida como busqueda aleatoria. La búsqueda aleatoria implica generar y evaluar entradas aleatorias a una función objetivo. Se puede generar una muestra aleatoria de un dominio usando un generador de números pseudoaleatorios. Cada variable requiere un límite o rango bien definido y se puede muestrear un valor aleatorio uniforme del rango y luego evaluarlo. La función objetivo puede plantearse como una funcion lineal en combinación con las metricas de evaluación de interes como la exactitud o el F1-score o simplemente usar una de las metricas a maximizar. 
+
+\subsection{Métricas de evaluación}
+En el aprendizaje automático la matriz de confusión es una herramienta que permite visualizar el desempeño de un algoritmo  de aprendizaje supervisado. Cada columna de la matriz representa el número de predicciones de cada clase, mientras que cada fila representa a las instancias en la clase real. Nos permite ver  qué tipos de aciertos y errores está teniendo nuestro modelo a la hora de pasar por el proceso de aprendizaje con los datos. EN la matriz de confusión existen 4 resultados posibles: 
+
+\begin{itemize}
+\item Verdadero positivo (VP): El valor real es positivo y  la prueba predijo tambien que era positivo. O bien una persona está enferma y la prueba así lo demuestra.
+\item Verdadero negativo (VN): El valor real  es negativo y la prueba predijo tambien que el resultado era negativo. O bien la persona no está enferma y la prueba así lo  demuestra.
+\item Falso negativo (FN): El valor real es positivo, y la prueba predijo  que el resultado es negativo. La persona está enferma, pero la prueba dice de manera incorrecta que no lo está. Esto es lo que en estadística se conoce como error tipo II
+\item Falso positivo (FP): El valor real es negativo, y la prueba predijo  que el resultado es positivo. La persona no está enferma, pero la prueba nos dice de manera incorrecta que silo está.
+\end{itemize}
+
+A partir de estas 4 opciones  surgen las métricas de la matriz de confusión:  Por una parte la exactitud y la precisión y por otra la Sensibilidad y la Especificidad. En este trabajo solo se utiliza la exactitud para comprobar la efectividad del algoritmo. Esa métrica se refiere a lo cerca que está el resultado de una medición del valor verdadero. Se representa como  la proporción de resultados verdaderos (tanto verdaderos positivos como verdaderos negativos) dividido entre el número total de casos examinados (verdaderos positivos, falsos positivos, verdaderos negativos, falsos negativos). 
+
+\begin{equation}
+exactitud=\frac{VP+VN}{VP+FP+FN+VN}
+\end{equation}
+
 \section{Resultados}
-Para realizar la práctica se programó en lenguaje Python (revisar Anexo A) los dos sistemas de regresión. Primero se obtuvo el conjunto de datos publico mpg-auto el cual contiene información de distintos autos que se relacionan con el rendimiento de gasolina como se muestra en la Tabla 1. Para ambos casos se tuvo que hacer un pre-procesamiento de los datos debido a que el archivo disponible no cuenta con información completa para todos los registros. Es importante mencionar que el conjunto de datos contiene registros sobre el modelo y al ser una variable categorica puede ser convertida a variable dummy. Las variables se normalizaron para quedar en el mismo rango. los datos se dividieron para entrenamiento y pruebas en una proporcion 80/20 respectivamente.
+Para realizar la práctica se programó en lenguaje Python los dos sistemas de regresión. Primero se obtuvo el conjunto de datos publico Dry Bean Dataset el cual contiene información de 7 distintos tipos de fijoles como se muestra en la Tabla 1. Se tuvo que hacer un pre-procesamiento de los datos debido las clases son categoricas y los datos se normalizaron (ver anexo A). los datos se dividieron para entrenamiento y pruebas en una proporcion 80/20 respectivamente.\\
 
-Mediante la técnica de eliminación hacia atras se optimizó la regresión lineal multiple, colocando todas las variables x se fueron eliminando las variables que su valor P superaba el umbral del 5\% para el sistema.  En este conjunto de datos en particular solo se eliminó una variable la aceleración que si bien superaba el 5\% de umbral, no lo superó por mucho pues obtuvo 6\% y se pudo dejar en el modelo.  
+Con los datos pre-procesados se entrenaron los algoritmos mencionados en la sección anterior con los siguientes parametros: 
+\begin{itemize}
+\item KNN 
+\begin{itemize}
+\item valor k=5
+\item distancia euclidiana
+\end{itemize}
+\item Árbol de desición 
+\begin{itemize}
+\item Criterio de homogeneidad: gini/entropía
+\end{itemize}
+\item Bosques aleatorios
+\begin{itemize}
+\item Número de árboles: 10
+\end{itemize}
+\item SVM
+\begin{itemize}
+\item kernel: función de base radial 
+\end{itemize}
+\end{itemize}
 
-\begin{table}[h]
+Para definir el número de capas ocultas de la red neuronal, el número de neuronas por capa, el ratio de aprendizaje y el optimizador se hace uso de la libreria keras-tuner que cuenta con el método de busqueda aleatoria. La función objetivo se elige como la exactitud y se definieron los siguientes valores como área de busqueda: 
+
+\begin{itemize}
+\item Número de capas ocultas: entre 0 y 8 
+\item Número de neuronas por capa: entre 16 y 256
+\item Valor de ratio de aprendizaje: entre $1e^{-4}$ y $1e^{-2}$
+\item Optimizadores: Adam y Stochastic Gradient Descent
+\end{itemize} 
+
+Los valores que finalmente resultaron optimos de la busqueda fueron: 
+\begin{itemize}
+\item Número de capas ocultas: 7 
+\item Número de neuronas por capa: 124
+\item Valor de ratio de aprendizaje: 0.00055
+\item Optimizadores: Adam 
+\end{itemize} 
+
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{| c | c |}
 \hline
-\multicolumn{2}{ |c| }{MPG-auto dataset} \\ \hline
-Dato & Tipo de dato \\ \hline
-Millas por galón & continuo \\ \hline
-Cilindros & discreto multivalor \\ \hline
-Desplazamiento & continuo \\ \hline
-Caballos de fuerza & continua  \\ \hline
-Peso & continuo  \\ \hline
-Aceleración & continua   \\ \hline
-Año del modelo &  discreto multivaluado  \\ \hline
-Origen &  discreto multivaluado \\ \hline
-Nombre del coche & cadena  \\ \hline
+\multicolumn{2}{ |c| }{Dry-Bean dataset} \\ \hline
+Dato & Descripción \\ \hline
+Área & El área de una zona de frijol \\ \hline
+Perímetro & La longitud de su borde \\ \hline
+Longitud del eje mayor & Distancia más larga entre los extremos \\ \hline
+Longitud del eje menor & Línea más larga con el frijol \\
+& perpendicular al eje \\ \hline
+Relación de aspecto & Relación entre las longitudes  \\ \hline
+Excentricidad  & Excentricidad de la elipse   \\ \hline
+Área convex & Píxeles en el polígono convexo \\ 
+& más pequeño  \\ \hline
+Diámetro equivalente & Diámetro que tiene la misma área \\
+& que un frijol \\ \hline
+Extensión & Relación de los píxeles delimitadores al \\
+& área del frijol \\ \hline
+Solidez  & relación píxeles capa convexa y dentro \\
+& de los frijoles \\ \hline
+Redondez  & Calculando $\frac{4piA}{P^2}$ \\ \hline
+Compacidad  & Mide la redondez de un objeto $\frac{Ed}{L}$ \\ \hline
+Factor de forma 1 &  SF1 \\ \hline
+Factor de forma 2 &  SF2 \\ \hline
+Factor de forma 3 &  SF3 \\ \hline
+Factor de forma 4 &  SF4 \\ \hline
+Clase & (Seker, Barbunya, Bombay, Cali, Dermosan, \\
+& Horozy Sira) \\ \hline
 \end{tabular}
-\caption{conjunto de datos MPG-auto }
+\caption{conjunto de datos Dry-Bean }
 \end{center}
 \end{table}
 
-Para los bosques aleatorios el proceso es similar, se ejecuta con el pre-procesamiento antes mencionado. Los resultados obtenidos se midieron mediante las metricas $R^2$ y $R^2$ ajustada como se observa en la Tabla 2.
-
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{| c | c |}
-\hline
-Regresión lineal multiple & Bosques aleatorios \\ \hline
-$R^2$ = 82.54\% & $R^2$ = 82.27\% \\ \hline
-$R^2$ = 82.54\% & $R^2$ = 88.22\% \\ \hline
-\end{tabular}
-\caption{Resultados del entrenamiento}
-\end{center}
-\end{table}
+Los resultados de los experimentos se pueden observar en la Tabla 2 
 
 \section*{Conclusiones}
 Como se pudo observar en los resultados, los bosques aleatorios son más robustos que la regresión lineal multiple aunque requiere más tiempo de procesamiento. Sin embargo, actualmente el poder de computo es cada vez mayor por lo que el tiempo se reduce con el paso de los años mediante el hardware. Durante el entrenamiento no se tomó en cuenta la variable categorica del modelo del auto ya que al intentar convertirla en variable dummy, eran demasiadas variables que no podian ser procesadas. Para trabajo futuro se puede modificar manualmente el conjunto de datos para asegurarse en reducir esa variable y colocar solo la marca del vehiculo. No se realizó en este trabajo ya que el rendimiento obtenido es considerablemente optimo por lo que podría no valer la pena incluir esas variables dummies. 
