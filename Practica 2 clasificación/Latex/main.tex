@@ -248,7 +248,25 @@ Clase & (Seker, Barbunya, Bombay, Cali, Dermosan, \\
 \end{center}
 \end{table}
 
-Los resultados de los experimentos se pueden observar en la Tabla 2 
+Los resultados de los experimentos se pueden observar en la Tabla 2.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{| c | c |}
+\hline
+Método de clasificación & Exactitud \\ \hline
+Clasificador bayesiano  & 89.68\% \\ \hline
+K-NN & 92.69\%\\ \hline
+Árboles de desición & 90.89\% \\ \hline
+Bosques aleatorios & 92.03\% \\ \hline
+SVM & 93.46\%  \\ \hline
+Redes neuronales & 93.88\% \\ \hline
+\end{tabular}
+\caption{Resultados de los experimentos}
+\end{center}
+\end{table}
+
+
 
 \section*{Conclusiones}
 Como se pudo observar en los resultados, los bosques aleatorios son más robustos que la regresión lineal multiple aunque requiere más tiempo de procesamiento. Sin embargo, actualmente el poder de computo es cada vez mayor por lo que el tiempo se reduce con el paso de los años mediante el hardware. Durante el entrenamiento no se tomó en cuenta la variable categorica del modelo del auto ya que al intentar convertirla en variable dummy, eran demasiadas variables que no podian ser procesadas. Para trabajo futuro se puede modificar manualmente el conjunto de datos para asegurarse en reducir esa variable y colocar solo la marca del vehiculo. No se realizó en este trabajo ya que el rendimiento obtenido es considerablemente optimo por lo que podría no valer la pena incluir esas variables dummies. 
