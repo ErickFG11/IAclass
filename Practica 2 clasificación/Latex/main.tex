@@ -28,7 +28,7 @@ e.francogaona@ugto.mx}
 \maketitle
 
 \begin{abstract}
-Las regresiones se utilizan a menudo para predecir situaciones de la vida real en la industria y la ciencia. Existen diversas técnicas para realizar regresiones como pueden ser regresiones lineales multiples o bosques aleatorios. En este trabajo se presenta un caso de estudio de esas dos técnicas sobre un conjunto de datos público para revisar la diferencia de efectividad entre ambos métodos. Mientras que la regresión lineal multiple obtuvo un 82\% de efectividad, los bosques aleatorios obtuvieron un 88\% a costa de un mayor tiempo de ejecución.  
+La clasificación es muy utilizada hoy en dia en diferentes campos de la vida cotidiana. Es todo un reto recolectar información suficiente para poder clasificar elementos ya que es necesario contar con un gran número de datos. Debido a esto, se utilizan datasets públicos para ahorrar tiempo de adquisición de datos, aunque no existen bases de datos para todo tipo de casos de estudio. En este trabajo se utilizan 6 tecnicas de clasificación mediante machine learning y se comparan los resultados en una dataset público para clasificar frijoles. Las técnicas utilizadas fueron clasificador bayesiano simple, K vecinos más cercanos, árboles de desición, bosques aleatorios, máquina de vectores de soporte y redes neuronales con un 89.68\%, 92.69\%, 90.89\%, 92.03\%, 93.46\% y 93.88\% de exactitud respectivamente.       
 \end{abstract}
 
 \section{Introducción}
@@ -42,6 +42,7 @@ Por último, el aprendizaje por refuerzo es un método de aprendizaje automátic
 En este trabajo se cuenta con un dataset público que posee 16 características de 6 diferentes tipos de frijol, por lo que, se utiliza el aprendizaje supervisado. En las siguientes secciones se explica la teoria y ejemplifica mediante el caso de estudio su aplicación. 
 
 \section{Teoría}
+Los conceptos básicos de las teoría utilizada en este trabajo es descrita a continuación. Se tomó información de \cite{b1},\cite{b2}, \cite{b3}
 \subsection{Clasificador bayesiano simple}
 El teorema de Bayes es utilizado para calcular la probabilidad de un suceso, teniendo información de antemano sobre ese suceso. Es posble calcular la probabilidad de un suceso A, sabiendo además que ese suceso cumple cierta característica que condiciona su probabilidad. El teorema de la probabilidad total hace inferencia sobre un suceso B, a partir de los resultados de los sucesos A. Por su parte, Bayes calcula la probabilidad de A condicionado a B. Para calcular la probabilidad tal como la definió Bayes en este tipo de sucesos, es necesaria la siguiente fórmula: 
 
@@ -197,7 +198,7 @@ Con los datos pre-procesados se entrenaron los algoritmos mencionados en la secc
 \end{itemize}
 \end{itemize}
 
-Para definir el número de capas ocultas de la red neuronal, el número de neuronas por capa, el ratio de aprendizaje y el optimizador se hace uso de la libreria keras-tuner que cuenta con el método de busqueda aleatoria. La función objetivo se elige como la exactitud y se definieron los siguientes valores como área de busqueda: 
+Para definir el número de capas ocultas de la red neuronal, el número de neuronas por capa, el ratio de aprendizaje y el optimizador se hace uso de la libreria keras-tuner que cuenta con el método de busqueda aleatoria. El algoritmo hizo 20 iteraciones. La función objetivo se elige como la exactitud y se definieron los siguientes valores como área de busqueda: 
 
 \begin{itemize}
 \item Número de capas ocultas: entre 0 y 8 
@@ -248,7 +249,7 @@ Clase & (Seker, Barbunya, Bombay, Cali, Dermosan, \\
 \end{center}
 \end{table}
 
-Los resultados de los experimentos se pueden observar en la Tabla 2.
+Los resultados de los experimentos se pueden observar en la Tabla 2. En la Figura 3 se muestra la matriz de confusión de SVM, clasificador con mejor eficacia y eficiencia. 
 
 \begin{table}[H]
 \begin{center}
@@ -257,7 +258,7 @@ Los resultados de los experimentos se pueden observar en la Tabla 2.
 Método de clasificación & Exactitud \\ \hline
 Clasificador bayesiano  & 89.68\% \\ \hline
 K-NN & 92.69\%\\ \hline
-Árboles de desición & 90.89\% \\ \hline
+Árboles de desición & gini: 88.6\% entropía: 90.89\% \\ \hline
 Bosques aleatorios & 92.03\% \\ \hline
 SVM & 93.46\%  \\ \hline
 Redes neuronales & 93.88\% \\ \hline
@@ -266,37 +267,48 @@ Redes neuronales & 93.88\% \\ \hline
 \end{center}
 \end{table}
 
-
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.6]{3.png}
+    \caption{Matriz de confusión de SVM.}
+    \label{fig:mesh1}
+\end{figure}
 
 \section*{Conclusiones}
-Como se pudo observar en los resultados, los bosques aleatorios son más robustos que la regresión lineal multiple aunque requiere más tiempo de procesamiento. Sin embargo, actualmente el poder de computo es cada vez mayor por lo que el tiempo se reduce con el paso de los años mediante el hardware. Durante el entrenamiento no se tomó en cuenta la variable categorica del modelo del auto ya que al intentar convertirla en variable dummy, eran demasiadas variables que no podian ser procesadas. Para trabajo futuro se puede modificar manualmente el conjunto de datos para asegurarse en reducir esa variable y colocar solo la marca del vehiculo. No se realizó en este trabajo ya que el rendimiento obtenido es considerablemente optimo por lo que podría no valer la pena incluir esas variables dummies. 
+Como se pudo observar en los resultados, la máquina de vectores de soporte y las redes neuronales tuvieron los mejores resultados. Apesar de que las redes neuronales en cuanto a tiempo tarda mucho más tiempo que un SVM el desempeño no es razonablemente mayor para preferlas sobre SVM. Para este caso de estudio probablemente sea mejor utilizar un SVM ya que tiene menor carga computacional por una exactitud practicamente similiar a una red neuronal. El problema con las redes neuronales es que puede tener multiples combinaciones en su arquitectura que si bien se puede aplicar un método de optimización, esto implica un proceso extra sobre los otros métodos. \\
 
-Las regresiones no son 100\% efectivas ya que no siempre se va a ajustar perfectamente a los valores a predecir pero si se puede hacer una aproximación cercana mediante la optimización de parametros de los métodos. Ademas, es bueno revisar de ser posible los datos que se proporcionan para el entrenamiento y eliminar los valores atipicos para evitar errores. El sobreajuste es un problema que trata de evitar los bosques aleatorios y que generalmente cumple su función, pero dependiendo de la aplicación puede optarse por una técnica u otra. A pesar de no ser confiables en su totalidad. las predicciones que es capaz de realizar alguno de estos métodos son lo suficientemente robustos para utilizarse en la industria ajustando el modelo lomejor posible para mejores resultados. 
+El dataset probablemente sea necesario modificarlo para que el desempeño aumente en los métodos de clasificación ya que por más que se pueda optimizar un algoritmo si los datos no son optimos no mejora la exactitud. Lo mejor es realizar un análisis de componentes principales para identificar que variables o caracteristicas no aportan realmente información importante. Esto ayuda tambien a reducir dimensiones por lo que el proceso será más rápido. SI bien hay muchos factores que influyen en el desempeño se pueden prevenir problemas realizando un análisis de los datos. Además al no utilizar validación cruzada puede ocurrir sobre entrenamiento, es decir, no generalizar el modelo. Métodos como árboles de desición son sensibles al sobre ajuste por lo que a futuro se deben comprobar los resultados con más pruebas. 
 
 
 \begin{thebibliography}{00}
-\bibitem{b1}Yang, Q. (2017). Regression. In: Schintler, L., McNeely, C. (eds) Encyclopedia of Big Data. Springer, Cham. https://doi.org/10.1007/978-3-319-32001-4-174-1.
-\bibitem{b2} Probabilidad y estadística aplicadas a la ingeniería, Douglas C. Montgomery y George C. Runger. Limusa Wiley, 2002. Segunda edición.
-\bibitem{b3} Rokach, L., Maimon, O. (2005). Decision Trees. In: Maimon, O., Rokach, L. (eds) Data Mining and Knowledge Discovery Handbook. Springer, Boston, MA. https://doi.org/10.1007/0-387-25465-X-9.
-\bibitem{b4} Cutler, A., Cutler, D.R., Stevens, J.R. (2012). Random Forests. In: Zhang, C., Ma, Y. (eds) Ensemble Machine Learning. Springer, Boston, MA. https://doi.org/10.1007/978-1-4419-9326-7-5.
+\bibitem{b1}A. Géron, Hands-On Machine Learning with Scikit-Learn and TensorFlow, 3a ed. Sebastopol: O’Reilly, 2022.
+\bibitem{b2} S. J. Russell, Inteligencia artificial: Un enfoque moderno, 2a ed. Madrid: Pearson Prentice Hall, 2004.
+\bibitem{b3}C. Huyen, Designing Machine Learning Systems. Sebastopol: O’Reilly, 2022.
+
 
 \end{thebibliography}
 
 \section{Anexo A}
-Lectura de conjunto de datos y separandolos en variables dependientes e independientes y eliminación de valores incompletos.  
+\subsection{Procesamiento de datos}
+Lectura de conjunto de datos y separandolos en variables dependientes e independientes.  
 \lstset{language=Python, breaklines=true, basicstyle=\footnotesize}
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=-2pt}
 \begin{lstlisting}[frame=single]
-    cols=["MPG", "cylinders", "displacement", "horsepower", "weight", "acceleration", "model year", "origin"]
-    dataset=pd.read_csv("auto-mpg.data", na_values="?", comment='\t', sep=' ', skipinitialspace=True, names=cols)
-    X=dataset.iloc[:,1:].values
-    Y=dataset.iloc[:,0].values
+    dataset=pd.read_csv("Dry_Bean_Dataset.csv")
+    X=dataset.iloc[:,:-1].values
+    Y=dataset.iloc[:,-1].values
+\end{lstlisting}
+
+Codificando datos categorticos
+\begin{lstlisting}[frame=single]
+    labelencoder_Y=LabelEncoder()
+    Y=labelencoder_Y.fit_transform(Y)
 \end{lstlisting}
 
 Normalizado de datos. 
 \begin{lstlisting}[frame=single]
-    sc=StandardScaler()
-    X=sc.fit_transform(X)
+    sc_X=StandardScaler()
+    X=sc_X.fit_transform(X)
 \end{lstlisting}
 
 Separando el conjunto de datos.
@@ -304,27 +316,68 @@ Separando el conjunto de datos.
     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2, random_state=0)
 \end{lstlisting}
 
-\subsection{Regresión lineal multiple}
+\subsection{Naive Bayes}
 
-Ejecución de la regresión lineal multiple y calculo de las metricas de evaluación. 
 \begin{lstlisting}[frame=single]
-    regresion=LinearRegression()
-    regresion.fit(X_train, Y_train)
-    ypred=regresion.predict(X_test)
-
-    print("R^2 : ", r2_score(Y_test, ypred))
-    print("R^2 ajustada: ", 1 - (1-r2_score(Y_test, ypred))*(len(Y)-1)/(len(Y)-X.shape[1]-1))
+    classifier=GaussianNB()
+    classifier.fit(X_train, Y_train)
 \end{lstlisting}
 
-\subsection{Bosques aleatorios}
+\subsection{K-NN}
+\begin{lstlisting}[frame=single]
+    classifier=KNeighborsClassifier(n_neighbors=5, metric='euclidean')
+    classifier.fit(X_train, Y_train)
+\end{lstlisting}
+
+\subsection{Árboles de desición}
+\begin{lstlisting}[frame=single]
+    classifier=DecisionTreeClassifier(criterion='entropy', random_state=0)
+    classifier.fit(X_train, Y_train)
+\end{lstlisting}
+
+\subsection{Bosque aleatorio}
 Ejecución del bosque aleatorio estableciendo 10 árboles y calculo de las metricas de evaluación. 
 \begin{lstlisting}[frame=single]
-    regresion=RandomForestRegressor(n_estimators=10 ,random_state=0) 
-    regresion.fit(X_train, Y_train)
-    ypred=regresion.predict(X_test)
-    
-    print("R^2 : ", r2_score(Y_test, ypred))
-    print("R^2 ajustada: ", 1 - (1-r2_score(Y_test, ypred))*(len(Y)-1)/(len(Y)-X.shape[1]-1))
+    classifier=RandomForestClassifier(n_estimators=10, random_state=0)
+    classifier.fit(X_train, Y_train)
+\end{lstlisting}
 
+\subsection{SVM}
+\begin{lstlisting}[frame=single]
+    classifier=SVC(kernel='rbf', random_state=0)
+    classifier.fit(X_train, Y_train)
+\end{lstlisting}
+
+\subsection{Red neuronal}
+\begin{lstlisting}[frame=single]
+    model=Sequential()
+    model.add(Flatten())
+    for _ in range(7):
+        model.add(Dense(124, activation='relu'))
+    model.add(Dense(7, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', 			metrics=['accuracy'])	
+    model.fit(X_train, Y_train, epochs=100, batch_size=32)
+\end{lstlisting}
+
+\section{Anexo B}
+\subsection{Optimización de red neuronal}
+\begin{lstlisting}[frame=single]
+    def construir_modelo(hp):
+    n_hidden=hp.Int("n_hidden", min_value=0, max_value=8, default=2)
+    n_neurons=hp.Int("n_neurons", min_value=16, max_value=256)
+    learning_rate=hp.Float("learning_rate", min_value=1e-4, max_value=1e-2, sampling="log")
+    optimizer=hp.Choice("optimizer", values=["sgd", "adam"])
+    if optimizer=="sgd":
+        optimizer=optimizers.SGD(learning_rate=learning_rate)
+    else:
+        optimizer=optimizers.Adam(learning_rate=learning_rate)
+
+    model=Sequential()
+    model.add(Flatten())
+    for _ in range(n_hidden):
+        model.add(Dense(n_neurons, activation='relu'))
+    model.add(Dense(7, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+    return model
 \end{lstlisting}
 \end{document}
