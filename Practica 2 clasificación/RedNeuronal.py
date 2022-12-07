@@ -51,7 +51,6 @@ if __name__ == '__main__':
     model.fit(X_train, Y_train, epochs=100, batch_size=32)
 
     #Prediccion
-    #Prediccion
     y_pred = model.predict(X_test)
     predicciones=[]
     reales=[]
